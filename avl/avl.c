@@ -53,7 +53,7 @@ static Node *balanceNode(Node *node) {
     return node;
 }
 
-Node *insert(Node *node, const char *key, double val, TreeResult *result) {
+Node *insert(Node *node, const char *key, const double val, TreeResult *result) {
     if (node == NULL) {
         *result = RESULT_CREATED;
         return newNode(key, val);

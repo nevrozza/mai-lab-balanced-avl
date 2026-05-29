@@ -16,7 +16,7 @@ Node *minValueNode(Node *node);
 
 void freeTree(Node *node);
 
-int getHeight(Node *node);
+int getHeight(const Node *node);
 
 
 int max(int a, int b);

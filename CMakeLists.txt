@@ -12,4 +12,8 @@ add_executable(avl main.c
         avl/avl_utils.h
         utils/utils.c
         utils/utils.h
+        cli/cli.c
+        cli/cli.h
+        avl/avl_handlers.c
+        avl/avl_handlers.h
 )

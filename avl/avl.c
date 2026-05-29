@@ -37,17 +37,19 @@ static Node *balanceNode(Node *node) {
     node->height = 1 + max(getHeight(node->l), getHeight(node->r));
     const int balance = getHeight(node->l) - getHeight(node->r);
 
-    if (balance > 1) {
+    if (balance > 1) { // Перевес влево -> Правое вращение
         if (getHeight(node->l->l) < getHeight(node->l->r)) {
+            // Если у левого ребёнка перевес влево – то LL – условие не отрабатывает -> Делается просто R
+            // Иначе LR – что и выходит
             node->l = leftRotate(node->l);
         }
         return rightRotate(node);
     }
-    if (balance < -1) {
+    if (balance < -1) { // Левое вращение
         if (getHeight(node->r->r) < getHeight(node->r->l)) {
-            node->r = rightRotate(node->r);
+            node->r = rightRotate(node->r); // Большое вращение
         }
-        return leftRotate(node);
+        return leftRotate(node); // Малое вращение
     }
 
     return node;

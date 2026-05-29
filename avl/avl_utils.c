@@ -1,6 +1,9 @@
-#include "utils.h"
+#include "avl_utils.h"
+#include "../utils/utils.h"
 
-#include <c++/v1/cstdlib>
+
+#include <stdlib.h>
+#include <string.h>
 
 
 void printTree(Node *root, int space, FILE *out) {
@@ -16,8 +19,31 @@ void printTree(Node *root, int space, FILE *out) {
     fprintf(out, "%s (%.2f)\n", root->key, root->val);
 
     printTree(root->l, space, out);
+}
 
-    return;
+Node *newNode(const char *key, const double val) {
+    Node *node = malloc(sizeof(Node));
+    if (!node) {
+        fatalMemoryError();
+    }
+    strcpy(node->key, key);
+    node->val = val;
+    node->l = NULL;
+    node->r = NULL;
+    node->height = 1;
+    return node;
+}
+
+int getBalance(const Node *node) {
+    if (node == NULL) return 0;
+    return getHeight(node->l) - getHeight(node->r);
+}
+
+Node *minValueNode(Node *node) {
+    Node *current = node;
+    while (current->l != NULL)
+        current = current->l;
+    return current;
 }
 
 

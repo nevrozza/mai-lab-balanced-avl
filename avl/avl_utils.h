@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 
-void printTree(Node *root, int space, FILE *out);
+void printTree(Node *root, FILE *out);
 
 
 Node *newNode(const char *key, double val);

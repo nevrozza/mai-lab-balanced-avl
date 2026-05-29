@@ -1,4 +1,7 @@
 #include "avl_utils.h"
+
+#include <stdbool.h>
+
 #include "../utils/utils.h"
 
 
@@ -6,19 +9,35 @@
 #include <string.h>
 
 
-void printTree(Node *root, int space, FILE *out) {
+static void printTreeHelper(Node *root, char *prefix, const bool isLeft, const bool isRoot, FILE *out) {
     if (root == NULL) return;
-    const int COUNT = 7;
-    space += COUNT;
 
-    printTree(root->r, space, out);
+    fprintf(out, "%s", prefix);
 
-    fprintf(out, "\n");
-    for (int i = COUNT; i < space; i++)
-        fprintf(out, " ");
+    if (!isRoot) {
+        fprintf(out, "%s", isLeft ? "├── L: " : "└── R: ");
+    } else {
+        fprintf(out, "ROOT: ");
+    }
+
     fprintf(out, "%s (%.2f)\n", root->key, root->val);
 
-    printTree(root->l, space, out);
+    char newPrefix[512];
+    if (!isRoot) {
+        snprintf(newPrefix, sizeof(newPrefix), "%s%s", prefix, isLeft ? "│   " : "    ");
+    } else {
+        snprintf(newPrefix, sizeof(newPrefix), "%s", prefix);
+    }
+
+    if (root->l || root->r) {
+        printTreeHelper(root->l, newPrefix, true, false, out);
+        printTreeHelper(root->r, newPrefix, false, false, out);
+    }
+}
+
+void printTree(Node *root, FILE *out) {
+    char prefix[512] = "";
+    printTreeHelper(root, prefix, false, true, out);
 }
 
 Node *newNode(const char *key, const double val) {
